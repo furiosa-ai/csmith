@@ -37,17 +37,18 @@
 
 /*****************************************************************************/
 
-#include <string.h>
-#include <float.h>
-#include <math.h>
+// #include <string.h>
+// #include <float.h>
+// #include <math.h>
 
 #define __STDC_LIMIT_MACROS
 #include "random_inc.h"
 
-static uint32_t crc32_tab[256];
+static uint32_t crc32_tab_0 = 0x57BE132AUL;
+static uint32_t crc32_tab_1 = 0x32B8A3E0UL;
 static uint32_t crc32_context = 0xFFFFFFFFUL;
 
-static void 
+inline static void
 crc32_gentab (void)
 {
 	uint32_t crc;
@@ -63,19 +64,29 @@ crc32_gentab (void)
 				crc >>= 1;
 			}
 		}
-		crc32_tab[i] = crc;
+		if (i == 0) {
+			crc32_tab_0 ^= crc;
+		} else {
+			crc32_tab_1 ^= crc;
+		}
 	}
 }
 
-static void 
+inline static void
 crc32_byte (uint8_t b) {
+	uint32_t crc32_tab;
+	if (crc32_context ^ b % 2 == 0) {
+		crc32_tab = crc32_tab_0;
+	} else {
+		crc32_tab = crc32_tab_1;
+	}
 	crc32_context = 
 		((crc32_context >> 8) & 0x00FFFFFF) ^ 
-		crc32_tab[(crc32_context ^ b) & 0xFF];
+		crc32_tab;
 }
 
 #if defined(__SPLAT__) || defined(NO_LONGLONG)
-static void 
+inline static void
 crc32_8bytes (uint32_t val)
 {
 	crc32_byte ((val>>0) & 0xff);
@@ -84,16 +95,13 @@ crc32_8bytes (uint32_t val)
 	crc32_byte ((val>>24) & 0xff);
 }
 
-static void 
+inline static void
 transparent_crc (uint32_t val, char* vname, int flag)
 {
 	crc32_8bytes(val);
-	if (flag) {
-  		printf("...checksum after hashing %s : %X\n", vname, crc32_context ^ 0xFFFFFFFFU);
-	}
 }
 #else
-static void 
+inline static void
 crc32_8bytes (uint64_t val)
 {
 	crc32_byte ((val>>0) & 0xff);
@@ -106,27 +114,21 @@ crc32_8bytes (uint64_t val)
 	crc32_byte ((val>>56) & 0xff);
 }
 
-static void 
+inline static void
 transparent_crc (uint64_t val, char* vname, int flag)
 {
 	crc32_8bytes(val);
-	if (flag) {
-  		printf("...checksum after hashing %s : %lX\n", vname, crc32_context ^ 0xFFFFFFFFUL);
-	}
 }
 
 #endif
 
-static void 
+inline static void
 transparent_crc_bytes (char *ptr, int nbytes, char* vname, int flag)
 {
     int i;
     for (i=0; i<nbytes; i++) {
-        crc32_byte(ptr[i]);
+	crc32_byte(ptr[i]);
     }
-	if (flag) {
-  		printf("...checksum after hashing %s : %lX\n", vname, crc32_context ^ 0xFFFFFFFFUL);
-	}
 }
 
 /*****************************************************************************/

@@ -41,7 +41,7 @@ define(`maxshift',`ifelse($1,int64_t,64,32)')
 
 define(`safe_signed_math',`
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(unary_minus_func_$1_s)($1 si LOG_INDEX)
 {
   LOG_EXEC
@@ -55,7 +55,7 @@ FUNC_NAME(unary_minus_func_$1_s)($1 si LOG_INDEX)
     -si;
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(add_func_$1_s_s)($1 si1, $1 si2 LOG_INDEX)
 {
   LOG_EXEC
@@ -69,7 +69,7 @@ FUNC_NAME(add_func_$1_s_s)($1 si1, $1 si2 LOG_INDEX)
     (si1 + si2);
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(sub_func_$1_s_s)($1 si1, $1 si2 LOG_INDEX)
 {
   LOG_EXEC
@@ -83,7 +83,7 @@ FUNC_NAME(sub_func_$1_s_s)($1 si1, $1 si2 LOG_INDEX)
     (si1 - si2);
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(mul_func_$1_s_s)($1 si1, $1 si2 LOG_INDEX)
 {
   LOG_EXEC
@@ -97,7 +97,7 @@ FUNC_NAME(mul_func_$1_s_s)($1 si1, $1 si2 LOG_INDEX)
     si1 * si2;
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(mod_func_$1_s_s)($1 si1, $1 si2 LOG_INDEX)
 {
   LOG_EXEC
@@ -109,7 +109,7 @@ FUNC_NAME(mod_func_$1_s_s)($1 si1, $1 si2 LOG_INDEX)
     (si1 % si2);
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(div_func_$1_s_s)($1 si1, $1 si2 LOG_INDEX)
 {
   LOG_EXEC
@@ -121,7 +121,7 @@ FUNC_NAME(div_func_$1_s_s)($1 si1, $1 si2 LOG_INDEX)
     (si1 / si2);
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(lshift_func_$1_s_s)($1 left, int right LOG_INDEX)
 {
   LOG_EXEC
@@ -133,7 +133,7 @@ FUNC_NAME(lshift_func_$1_s_s)($1 left, int right LOG_INDEX)
     (left << ((int)right));
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(lshift_func_$1_s_u)($1 left, unsigned int right LOG_INDEX)
 {
   LOG_EXEC
@@ -145,7 +145,7 @@ FUNC_NAME(lshift_func_$1_s_u)($1 left, unsigned int right LOG_INDEX)
     (left << ((unsigned int)right));
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(rshift_func_$1_s_s)($1 left, int right LOG_INDEX)
 {
   LOG_EXEC
@@ -157,7 +157,7 @@ FUNC_NAME(rshift_func_$1_s_s)($1 left, int right LOG_INDEX)
     (left >> ((int)right));
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(rshift_func_$1_s_u)($1 left, unsigned int right LOG_INDEX)
 {
   LOG_EXEC
@@ -179,35 +179,35 @@ safe_signed_math(int64_t,INT64_MIN,INT64_MAX)
 
 define(`safe_unsigned_math',`
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(unary_minus_func_$1_u)($1 ui LOG_INDEX)
 {
   LOG_EXEC
   return -ui;
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(add_func_$1_u_u)($1 ui1, $1 ui2 LOG_INDEX)
 {
   LOG_EXEC
   return ui1 + ui2;
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(sub_func_$1_u_u)($1 ui1, $1 ui2 LOG_INDEX)
 {
   LOG_EXEC
   return ui1 - ui2;
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(mul_func_$1_u_u)($1 ui1, $1 ui2 LOG_INDEX)
 {
   LOG_EXEC
   return ((promote2($1))ui1) * ((promote2($1))ui2);
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(mod_func_$1_u_u)($1 ui1, $1 ui2 LOG_INDEX)
 {
   LOG_EXEC
@@ -219,7 +219,7 @@ FUNC_NAME(mod_func_$1_u_u)($1 ui1, $1 ui2 LOG_INDEX)
     (ui1 % ui2);
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(div_func_$1_u_u)($1 ui1, $1 ui2 LOG_INDEX)
 {
   LOG_EXEC
@@ -231,7 +231,7 @@ FUNC_NAME(div_func_$1_u_u)($1 ui1, $1 ui2 LOG_INDEX)
     (ui1 / ui2);
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(lshift_func_$1_u_s)($1 left, int right LOG_INDEX)
 {
   LOG_EXEC
@@ -243,7 +243,7 @@ FUNC_NAME(lshift_func_$1_u_s)($1 left, int right LOG_INDEX)
     (left << ((int)right));
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(lshift_func_$1_u_u)($1 left, unsigned int right LOG_INDEX)
 {
   LOG_EXEC
@@ -255,7 +255,7 @@ FUNC_NAME(lshift_func_$1_u_u)($1 left, unsigned int right LOG_INDEX)
     (left << ((unsigned int)right));
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(rshift_func_$1_u_s)($1 left, int right LOG_INDEX)
 {
   LOG_EXEC
@@ -267,7 +267,7 @@ FUNC_NAME(rshift_func_$1_u_s)($1 left, int right LOG_INDEX)
     (left >> ((int)right));
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(rshift_func_$1_u_u)($1 left, unsigned int right LOG_INDEX)
 {
   LOG_EXEC
@@ -293,7 +293,7 @@ dnl For those use ldexp and ldexpf calls instead.
 
 define(`safe_float_math',`
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(add_func_$1_f_f)($1 sf1, $1 sf2 LOG_INDEX)
 {
   LOG_EXEC
@@ -305,7 +305,7 @@ FUNC_NAME(add_func_$1_f_f)($1 sf1, $1 sf2 LOG_INDEX)
     (sf1 + sf2);
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(sub_func_$1_f_f)($1 sf1, $1 sf2 LOG_INDEX)
 {
   LOG_EXEC
@@ -317,7 +317,7 @@ FUNC_NAME(sub_func_$1_f_f)($1 sf1, $1 sf2 LOG_INDEX)
     (sf1 - sf2);
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(mul_func_$1_f_f)($1 sf1, $1 sf2 LOG_INDEX)
 {
   LOG_EXEC
@@ -333,7 +333,7 @@ FUNC_NAME(mul_func_$1_f_f)($1 sf1, $1 sf2 LOG_INDEX)
     (sf1 * sf2);
 }
 
-STATIC $1
+inline STATIC $1
 FUNC_NAME(div_func_$1_f_f)($1 sf1, $1 sf2 LOG_INDEX)
 {
   LOG_EXEC
@@ -362,7 +362,7 @@ safe_float_math(double,,DBL_MAX,ldexp(1.0, -924),ldexp(1.0, -974))
 #endif
 
 define(`safe_float_conversion',`
-STATIC $2
+inline STATIC $2
 FUNC_NAME(convert_func_$1_to_$2)($1 sf1 LOG_INDEX)
 {
   LOG_EXEC

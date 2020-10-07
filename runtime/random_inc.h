@@ -48,15 +48,17 @@
     #include "stdint_ia32.h"
   #endif
 #else
-  #include <limits.h>
+  // #include <limits.h>
+  #include "custom_limits.h"
   #if defined(_MSC_VER)
     #include "windows/stdint.h"
   #else
-    #include <stdint.h>
+    // #include <stdint.h>
+    #include "custom_stdint_x86.h"
   #endif
 #endif
 
-#include <assert.h>
+// #include <assert.h>
 
 /*****************************************************************************/
 
