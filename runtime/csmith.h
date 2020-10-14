@@ -44,8 +44,7 @@
 #define __STDC_LIMIT_MACROS
 #include "random_inc.h"
 
-static uint32_t crc32_tab_0 = 0x57BE132AUL;
-static uint32_t crc32_tab_1 = 0x32B8A3E0UL;
+static uint32_t crc32_tab[256];
 static uint32_t crc32_context = 0xFFFFFFFFUL;
 
 inline static void
@@ -64,25 +63,15 @@ crc32_gentab (void)
 				crc >>= 1;
 			}
 		}
-		if (i == 0) {
-			crc32_tab_0 ^= crc;
-		} else {
-			crc32_tab_1 ^= crc;
-		}
+		crc32_tab[i] = crc;
 	}
 }
 
 inline static void
 crc32_byte (uint8_t b) {
-	uint32_t crc32_tab;
-	if (crc32_context ^ b % 2 == 0) {
-		crc32_tab = crc32_tab_0;
-	} else {
-		crc32_tab = crc32_tab_1;
-	}
 	crc32_context = 
 		((crc32_context >> 8) & 0x00FFFFFF) ^ 
-		crc32_tab;
+		crc32_tab[(crc32_context ^ b) & 0xFF];
 }
 
 #if defined(__SPLAT__) || defined(NO_LONGLONG)
